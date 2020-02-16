@@ -6,26 +6,21 @@ package me.balint.math;
 import java.util.Arrays;
 import java.util.Random;
 
-public class NoiseGeneratorOctaves
-{
+public class NoiseGeneratorOctaves {
 
-    public NoiseGeneratorOctaves(Random random, int i)
-    {
+    public NoiseGeneratorOctaves(Random random, int i) {
         octaves = i;
         noises = new NoiseGeneratorPerlin[i];
-        for(int j = 0; j < i; j++)
-        {
+        for(int j = 0; j < i; j++) {
             noises[j] = new NoiseGeneratorPerlin(random);
         }
 
     }
 
-    public double genOctaves(double x, double y)
-    {
+    public double genOctaves(double x, double y) {
         double noiseTotal = 0.0D;
         double frequency = 1.0D;
-        for(int i = 0; i < octaves; i++)
-        {
+        for(int i = 0; i < octaves; i++) {
             noiseTotal += noises[i].getNoise2D(x * frequency, y * frequency) / frequency;
             frequency /= 2D;
         }
@@ -36,19 +31,15 @@ public class NoiseGeneratorOctaves
     public double[] genOctaves(double[] noise,
                                double x, double y, double z,
                                int width, int height, int depth,
-                               double xScale, double yScale, double zScale)
-    {
-        if(noise == null)
-        {
+                               double xScale, double yScale, double zScale) {
+        if(noise == null) {
             noise = new double[width * height * depth];
         }
-        else
-        {
+        else {
             Arrays.fill(noise, 0);
         }
         double d6 = 1.0D;
-        for(int i1 = 0; i1 < octaves; i1++)
-        {
+        for(int i1 = 0; i1 < octaves; i1++) {
             noises[i1].generateNoise(noise, x, y, z, width, height, depth, xScale * d6, yScale * d6, zScale * d6, d6);
             d6 /= 2D;
         }
@@ -59,8 +50,7 @@ public class NoiseGeneratorOctaves
     public double[] genOctaves(double[] noise,
                                int x, int z,
                                int width, int depth,
-                               double xScale, double zScale, double d2)
-    {
+                               double xScale, double zScale, double d2) {
         return genOctaves(noise, x, 10D, z, width, 1, depth, xScale, 1.0D, zScale);
     }
 
